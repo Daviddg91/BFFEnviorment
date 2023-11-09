@@ -1,14 +1,12 @@
-
 CREATE DATABASE keycloakdb;
-
+CREATE DATABASE sonardb;
+CREATE DATABASE appdb; 
  
-CREATE USER addmin WITH PASSWORD 'addmin';
+CREATE USER addmin WITH SUPERUSER PASSWORD 'addmin';
 CREATE USER kcuser WITH PASSWORD 'kcuser';
-
+CREATE USER sonaruser WITH PASSWORD 'sonaruser';
  
 
 GRANT ALL PRIVILEGES ON DATABASE keycloakdb TO kcuser;
 GRANT ALL PRIVILEGES ON DATABASE appdb TO addmin;
-
-
-\connect appdb
+GRANT ALL PRIVILEGES ON DATABASE sonardb TO sonaruser;
