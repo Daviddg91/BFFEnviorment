@@ -5,6 +5,13 @@ pipeline {
     jdk 'jdk-17'
     maven 'mvn-3.6.3'
   }
+  
+   environment {
+      // General Variables for Pipeline
+      PROJECT_ROOT = './'
+      EMAIL_ADDRESS = 'ryskzero@gmail.com'
+      REGISTRY = 'david28/docker-bffenvironment'
+  }
 
   stages {
     stage('Build') {
