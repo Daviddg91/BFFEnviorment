@@ -23,10 +23,14 @@ pipeline {
 	
     stage('Build') {
       steps {
-        withMaven(maven : 'maven-build') {
-		  sh "mvn install package"
-		  
-        }
+		   dir("BussinessProject") {
+			sh "pwd"
+		
+				withMaven(maven : 'maven-build') {
+				  sh "mvn install package"
+				  
+				}
+			}
       }
     }
 	
