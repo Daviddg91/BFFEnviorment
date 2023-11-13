@@ -17,9 +17,6 @@ pipeline {
   stages {
 	  /*Bussiness project deploy*/
 	  
-	  dir("BussinessProject") {
-			sh "pwd"
-		}
 	
     stage('Build') {
       steps {
