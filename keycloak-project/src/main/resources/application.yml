@@ -1,0 +1,37 @@
+
+#spring:
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          jwk-set-uri: http://localhost:8080/realms/bff-environment/protocol/openid-connect/certs
+#          issuer-uri: http://localhost:8080/realms/bff-environment
+#  application:
+#    name: keycloak-project
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        security: DEBUG
+#        web:
+#          reactive:
+#            function:
+#              client: TRACE
+#        cloud:
+#          gateway: DEBUG
+#      keycloak: DEBUG
+#jwt:
+#  auth:
+#    converter:
+#      resource-id: bussines-project-client
+#      principle-attribute: preferred_username
+server:
+  port: '8090'
+  
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/bff-enviroment
+

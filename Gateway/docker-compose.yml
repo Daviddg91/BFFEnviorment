@@ -1,0 +1,53 @@
+---
+version: "3"
+services:
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    networks:
+      - springboot-network
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.3-legacy
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloakdb
+      DB_USER: user
+      DB_PASSWORD: 123
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 9080:8080
+    depends_on:
+      - mysql
+    networks:
+      - springboot-network
+    volumes:
+      - ./keycloak-config/:/opt/keycloak/data/import/
+  eureka-server:
+    image: springcloud/eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - springboot-network
+# IFAPA-DL:
+#   build: .
+#   image: IFAPA-DL-img
+#   depends_on:
+#       - db
+#   networks:
+#       - springboot-network
+#   ports:
+#     - 8080:8080  
+volumes:
+  mysql-db: 
+networks:
+  springboot-network:
+    driver: bridge

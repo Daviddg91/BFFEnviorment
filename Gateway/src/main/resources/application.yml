@@ -1,0 +1,78 @@
+server:
+  port: 8083
+#  servlet:
+#    context-path: /api  
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: 'true'
+
+          
+  datasource:
+    username: ${DATASOURCE_USERNAME:root}
+    url: ${DATASOURCE_JDBC_URL:jdbc:postgresql://localhost:5432/appdb}
+    password: ${DATASOURCE_PASSWORD:root}
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+#  servlet:
+#    context-path: ${SPRING_APP_CONTEXT_PATH:/api}
+#  port: ${SPRING_APP_PORT:8081}
+
+
+  application:
+    name: gateway
+  cloud:
+    gateway:
+#      default-filters:
+#        - TokenRelay
+      routes:            
+        - id: bussines-project1
+          uri: lb://BUSSINES-PROJECT
+          predicates:
+             - Path=/bussines-project/**
+
+
+        - id: restaurant-service
+          uri: lb://RESTAURANT-SERVICE
+          predicates:
+           - Path=/restaurant/**
+          
+#  config:
+#    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888/}
+    
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          gateway:
+#            provider: my-provider
+#            client-id: bussines-project-client
+#            client-secret: mCamTfpi7UaRfRNBL3TdisK2gjgfAiLk
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "http://127.0.0.1:8083/login/oauth2/code/{registrationId}"
+#            scope: openid, messages.read
+#        provider:
+#          my-provider:
+#            issuer-uri: http://127.0.0.1:8080/realms/bff-environment
+
+  security:
+   oauth2:
+     resourceserver:
+       jwt:
+         issuer-uri: http://localhost:8080/realms/bff-environment
+         
+logging:
+    level:
+        org:
+            springframework:
+                security: DEBUG
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+
+ 

@@ -1,0 +1,56 @@
+---
+version: "3"
+services:
+  mysql:
+    image: mysql/mysql-server:8.0.32-1.2.11-server
+    volumes:
+      - mysql-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ifapadb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    networks:
+      - springboot-network
+  keycloak:
+    image: quay.io/keycloak/keycloak:19.0.3-legacy
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: ifapadb
+      DB_USER: user
+      DB_PASSWORD: 123
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 9080:8080
+    depends_on:
+      - mysql
+    networks:
+      - springboot-network
+    command:
+      - start-dev
+  eureka-server:
+    image: springcloud/eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - springboot-network
+# IFAPA-DL:
+#   build: .
+#   image: IFAPA-DL-img
+#   depends_on:
+#       - db
+#   networks:
+#       - springboot-network
+#   ports:
+#     - 8080:8080  
+volumes:
+  mysql-db: 
+networks:
+  springboot-network:
+    driver: bridge
