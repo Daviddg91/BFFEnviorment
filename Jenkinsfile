@@ -15,6 +15,9 @@ pipeline {
   }
 
   stages {
+	  
+	  cd ./BussinessProject
+	  
     stage('Build') {
       steps {
         withMaven(maven : 'maven-build') {
