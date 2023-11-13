@@ -25,7 +25,17 @@ pipeline {
         }
       }
     }
-  
+	
+	stage('deploy springboot') {
+      steps {
+        withMaven(maven : 'maven-build') {
+          sh "mvn spring-boot:run"
+        }
+      }
+    }
+	
+	
+  /*
     stage ('OWASP Dependency-Check Vulnerabilities') {
       steps {
         withMaven(maven : 'mvn-3.6.3') {
@@ -45,7 +55,7 @@ pipeline {
         }
       }
     }
-/*
+
    stage('Create and push container') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -55,7 +65,7 @@ pipeline {
         }
       } 
     }
-*/
+
     stage('Anchore analyse') {
       steps {
         writeFile file: 'anchore_images', text: 'docker.io/maartensmeets/spring-boot-demo'
@@ -63,6 +73,7 @@ pipeline {
       }
     }
 
+/*
     stage('Deploy to K8s') {
       steps {
         withKubeConfig([credentialsId: 'kubernetes-config']) {
@@ -72,6 +83,6 @@ pipeline {
         }
       } 
     }
-	
+	*/
   }
 }
