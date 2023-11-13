@@ -2,6 +2,9 @@ ARG JENKINS_VER=lts-jdk17
 ARG JENKINS_REGISTRY=jenkins/jenkins
 FROM ${JENKINS_REGISTRY}:${JENKINS_VER}
 
+#ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+ENV JENKINS_DIR=./docker/builds/jenkins
+
 # switch to root, let the entrypoint drop back to jenkins
 USER root
 
@@ -43,6 +46,14 @@ RUN usermod -a -G docker jenkins
 #RUN chmod +x /entrypoint.sh
 #ENTRYPOINT ["/entrypoint.sh"]
 #HEALTHCHECK CMD curl -sSLf http://localhost:8080/login >/dev/null || exit 1
+
+COPY ${JENKINS_DIR}/jenkins-plugin-cli.sh /jenkins-plugin-cli.sh
+COPY ${JENKINS_DIR}/plugins.txt /usr/share/jenkins/ref/plugins.txt
+COPY ${JENKINS_DIR}/jenkins-cli.jar /jenkins-cli.jar
+
+#ENTRYPOINT ["java -jar ./jenkins-cli.jar -s http://localhost:9080/ pipeline-maven:latest — username admin — password admin"]  
+
+#RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 
 ARG BUILD_DATE
 ARG VCS_REF

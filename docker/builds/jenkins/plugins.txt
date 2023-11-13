@@ -1,0 +1,2 @@
+pipeline-maven:latest
+workflow-aggregator:latest

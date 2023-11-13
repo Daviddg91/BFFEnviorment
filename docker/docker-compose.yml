@@ -21,7 +21,7 @@ services:
     networks:
       - springboot-network    
   jenkins:
-    image: localhost:50000/jenkins-docker
+    image: jenkins-docker
     build: 
        dockerfile: ${JENKINS_DIR}/Dockerfile
     restart: unless-stopped

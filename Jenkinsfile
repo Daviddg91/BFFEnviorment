@@ -3,7 +3,7 @@ pipeline {
   agent any
 
   tools {
-    jdk 'jdk17'
+    jdk 'jdk-17'
     maven 'maven-3.6.3'
   }
   
@@ -42,8 +42,8 @@ pipeline {
         }
       }
     }
-
-    stage('Create and push container') {
+/*
+   stage('Create and push container') {
       steps {
         withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
           withMaven(maven : 'mvn-3.6.3') {
@@ -52,7 +52,7 @@ pipeline {
         }
       } 
     }
-
+*/
     stage('Anchore analyse') {
       steps {
         writeFile file: 'anchore_images', text: 'docker.io/maartensmeets/spring-boot-demo'
