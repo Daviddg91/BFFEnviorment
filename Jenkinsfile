@@ -15,13 +15,14 @@ pipeline {
   }
 
   stages {
+	  /*Bussiness project deploy*/
 	  
-	  cd ./BussinessProject
-	  
+	  sh "cd ./BussinessProject"
+	
     stage('Build') {
       steps {
         withMaven(maven : 'maven-build') {
-          sh "mvn package"
+          sh "mvn install package"
         }
       }
     }
