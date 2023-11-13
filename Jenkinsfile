@@ -9,7 +9,7 @@ pipeline {
   
    environment {
       // General Variables for Pipeline
-      PROJECT_ROOT = './'
+      PROJECT_ROOT = './**'
       EMAIL_ADDRESS = 'ryskzero@gmail.com'
       REGISTRY = 'david28/docker-bffenvironment'
   }
