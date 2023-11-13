@@ -4,7 +4,7 @@ pipeline {
 
   tools {
     jdk 'jdk-17'
-    maven 'maven-3.6.3'
+    maven 'maven-build'
   }
   
    environment {
@@ -22,7 +22,7 @@ pipeline {
         }
       }
     }
-
+  
     stage ('OWASP Dependency-Check Vulnerabilities') {
       steps {
         withMaven(maven : 'mvn-3.6.3') {
@@ -69,5 +69,6 @@ pipeline {
         }
       } 
     }
+	
   }
 }
