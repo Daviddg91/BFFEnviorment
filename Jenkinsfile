@@ -23,7 +23,9 @@ pipeline {
       steps {
         withMaven(maven : 'maven-build') {
 		  sh 'cd ./BussinessProject/'
-          sh "mvn install package"
+          sh 'pwd'
+		  sh "mvn install package"
+		  
         }
       }
     }
